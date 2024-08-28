@@ -1,88 +1,93 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyBlogApp());
+void main() {
+  runApp(MyApp());
+}
 
-class MyBlogApp extends StatelessWidget {
-  const MyBlogApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Flutter Blog',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlogHomePage(),
+      home: BlogPage(),
     );
   }
 }
 
-class BlogHomePage extends StatelessWidget {
-  final List<Map<String, String>> blogPosts = [
-    {
-      'title': 'Welcome to My Flutter Blog',
-      'content': 'This is the first post on my Flutter blog. Stay tuned for more updates!'
-    },
-    {
-      'title': 'Understanding Flutter Widgets',
-      'content': 'In this post, we explore the basics of Flutter widgets and how to use them.'
-    },
-    {
-      'title': 'State Management in Flutter',
-      'content': 'State management is crucial in Flutter apps. Learn about different approaches.'
-    },
+class BlogPage extends StatefulWidget {
+  @override
+  _BlogPageState createState() => _BlogPageState();
+}
+
+class _BlogPageState extends State<BlogPage> {
+  int _selectedIndex = 0;
+
+  final List<String> categories = [
+    'OOP Concepts',
+    'SOLID Principles',
+    'Flutter Concepts',
+    'Databases in Flutter',
+    'Method Channels',
+    'Hot Reload vs. Hot Restart',
+    'Google Map Implementation',
+    'Design Patterns in Flutter',
+    'State Management',
   ];
 
-  BlogHomePage({super.key});
+  final List<String> content = [
+    // Detailed content for each category here
+    'Content about OOP Concepts...',
+    'Content about SOLID Principles...',
+    'Content about Flutter Concepts...',
+    'Content about Databases in Flutter...',
+    'Content about Method Channels...',
+    'Content about Hot Reload vs. Hot Restart...',
+    'Content about Google Map Implementation...',
+    'Content about Design Patterns in Flutter...',
+    'Content about State Management...',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Flutter Blog'),
+        title: Text('Flutter Concepts'),
       ),
-      body: ListView.builder(
-        itemCount: blogPosts.length,
-        itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.all(10.0),
-            child: ListTile(
-              title: Text(blogPosts[index]['title']!),
-              subtitle: Text(blogPosts[index]['content']!.substring(0, 50) + '...'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BlogPostPage(
-                      title: blogPosts[index]['title']!,
-                      content: blogPosts[index]['content']!,
-                    ),
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: ListView(
+              children: [
+                ListTile(
+                  title: ExpansionTile(
+                    title: Text('OOP Concepts'),
+                    children: <Widget>[
+                      Text('Class'),
+                      Text('Object'),
+                      Text('Inheritance'),
+                      Text('Polymorphism'),
+                      Text('Abstraction'),
+                      Text('Encapsulation'),
+                    ],
                   ),
-                );
-              },
+                  onTap: () {
+                    setState(() {
+                      // _selectedIndex = index;
+                    });
+                  },
+                ),
+              ],
             ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class BlogPostPage extends StatelessWidget {
-  final String title;
-  final String content;
-
-  BlogPostPage({super.key, required this.title, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(content, style: const TextStyle(fontSize: 18)),
+          ),
+          VerticalDivider(),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(content[_selectedIndex]),
+            ),
+          ),
+        ],
       ),
     );
   }
