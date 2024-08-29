@@ -163,15 +163,21 @@ final List<BlogModel> blogData = [
       ),
       BlogModel(
         category: 'Future',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Isolates',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Method Channels',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
     ],
     content: [],
@@ -241,23 +247,33 @@ final List<BlogModel> blogData = [
     subCategory: [
       BlogModel(
         category: 'SetState',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Provider',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Riverpod',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Bloc',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'GetX',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
     ],
     content: [],
@@ -267,15 +283,21 @@ final List<BlogModel> blogData = [
     subCategory: [
       BlogModel(
         category: 'Shared Preferences',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'Hive and Isar',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
       BlogModel(
         category: 'SQFlite',
-        content: [],
+        content: [
+          'WIP',
+        ],
       ),
     ],
     content: [],
@@ -283,6 +305,8 @@ final List<BlogModel> blogData = [
   BlogModel(
     category: 'Google Map',
     subCategory: [],
-    content: [],
+    content: [
+      'WIP',
+    ],
   ),
 ];
