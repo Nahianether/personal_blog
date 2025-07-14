@@ -132,9 +132,9 @@ class _LandingPageState extends ConsumerState<LandingPage> {
               ),
             ),
           ),
-          
+
           const Spacer(),
-          
+
           // Navigation Links
           Row(
             children: [
@@ -142,7 +142,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
               const SizedBox(width: 40),
               _buildNavLink('Courses', _scrollToCourses),
               const SizedBox(width: 40),
-              
+
               // About Me Button
               GestureDetector(
                 onTap: _openAboutMeLink,
@@ -213,9 +213,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ],
                   ),
                 ),
-                
                 const SizedBox(height: 24),
-                
                 Text(
                   'Our e-learning programs has been developed to be a vehicle\nof delivering multimedia learning solutions for your business.',
                   style: GoogleFonts.inter(
@@ -225,9 +223,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     height: 1.6,
                   ),
                 ),
-                
                 const SizedBox(height: 40),
-                
                 Row(
                   children: [
                     // Contact Button
@@ -249,32 +245,20 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                         ),
                       ),
                     ),
-                    
+
                     const SizedBox(width: 60),
                     
                     // Stats
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              '50',
-                              style: GoogleFonts.inter(
-                                fontSize: 48,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              '+',
-                              style: GoogleFonts.inter(
-                                fontSize: 36,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFFFF8A3C),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Comprehensive',
+                          style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
                           'Career Courses',
@@ -292,28 +276,16 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              '1M',
-                              style: GoogleFonts.inter(
-                                fontSize: 48,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              '+',
-                              style: GoogleFonts.inter(
-                                fontSize: 36,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFFFF8A3C),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Growing',
+                          style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
-                          'Our Students',
+                          'Community',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -327,7 +299,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
               ],
             ),
           ),
-          
+
           // Right Side - Illustration Area
           Expanded(
             flex: 4,
@@ -342,7 +314,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFFFF8A3C).withOpacity(0.3),
+                          color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
                           blurRadius: 40,
                           spreadRadius: 10,
                         ),
@@ -358,7 +330,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ),
                   ),
                 ),
-                
+
                 // Decorative loading GIF
                 Positioned(
                   top: 20,
@@ -383,7 +355,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ),
                   ),
                 ),
-                
+
                 // Additional decorative element
                 Positioned(
                   top: 100,
@@ -397,7 +369,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ),
                   ),
                 ),
-                
+
                 // Stats card
                 Positioned(
                   top: 60,
@@ -426,7 +398,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '175K',
+                          'Active',
                           style: GoogleFonts.inter(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -434,7 +406,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                           ),
                         ),
                         Text(
-                          'Assisted Students',
+                          'Learning Hub',
                           style: GoogleFonts.inter(
                             fontSize: 12,
                             color: Colors.white70,
@@ -444,7 +416,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ),
                   ),
                 ),
-                
+
                 // Learning chart
                 Positioned(
                   bottom: 80,
@@ -517,9 +489,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
               height: 1.2,
             ),
           ),
-          
           const SizedBox(height: 60),
-          
           Row(
             children: [
               Expanded(
@@ -555,9 +525,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
               ),
             ],
           ),
-          
           const SizedBox(height: 40),
-          
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
@@ -598,9 +566,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
             color: Colors.white,
             size: 48,
           ),
-          
           const Spacer(),
-          
           Text(
             title,
             style: GoogleFonts.inter(

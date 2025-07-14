@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/theme_provider.dart';
 import '../../providers/blog_provider.dart';
 
-class AppHeader extends StatelessWidget {
+// Theme provider for Riverpod
+final isDarkModeProvider = StateProvider<bool>((ref) => false);
+
+class AppHeader extends ConsumerWidget {
   const AppHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    
+    final isDarkMode = ref.watch(isDarkModeProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -42,10 +45,10 @@ class AppHeader extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                      ref.read(isDarkModeProvider.notifier).state = !isDarkMode;
                     },
                     icon: Icon(
-                      Provider.of<ThemeProvider>(context).isDarkMode
+                      isDarkMode
                           ? Icons.light_mode_outlined
                           : Icons.dark_mode_outlined,
                       color: theme.colorScheme.onSurface,
@@ -54,7 +57,7 @@ class AppHeader extends StatelessWidget {
                   const SizedBox(width: 8),
                   IconButton(
                     onPressed: () {
-                      _showProgressDialog(context);
+                      _showProgressDialog(context, ref);
                     },
                     icon: Icon(
                       Icons.analytics_outlined,
@@ -66,22 +69,21 @@ class AppHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Consumer<BlogProvider>(
-            builder: (context, blogProvider, child) {
-              return _buildProgressIndicator(context, blogProvider);
-            },
-          ),
+          _buildProgressIndicator(context, ref),
         ],
       ),
     );
   }
-  
-  Widget _buildProgressIndicator(BuildContext context, BlogProvider blogProvider) {
+
+  Widget _buildProgressIndicator(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final progress = blogProvider.overallProgress;
-    final completedCount = blogProvider.completedPosts.length;
-    final totalCount = blogProvider.posts.length;
+    final posts = ref.watch(postsProvider);
+    final completed = ref.watch(completedPostsProvider);
     
+    final completedCount = completed.length;
+    final totalCount = posts.length;
+    final overallProgress = totalCount > 0 ? completedCount / totalCount : 0.0;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -115,14 +117,14 @@ class AppHeader extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           LinearProgressIndicator(
-            value: progress,
+            value: overallProgress,
             backgroundColor: theme.colorScheme.outline.withValues(alpha: 0.2),
             valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
             minHeight: 6,
           ),
           const SizedBox(height: 4),
           Text(
-            '${(progress * 100).toStringAsFixed(1)}% Complete',
+            '${(overallProgress * 100).toStringAsFixed(1)}% Complete',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
@@ -131,11 +133,31 @@ class AppHeader extends StatelessWidget {
       ),
     );
   }
-  
-  void _showProgressDialog(BuildContext context) {
+
+  void _showProgressDialog(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final blogProvider = Provider.of<BlogProvider>(context, listen: false);
-    
+    final posts = ref.read(postsProvider);
+    final completed = ref.read(completedPostsProvider);
+
+    // Calculate progress by category
+    final progressByCategory = <String, int>{};
+    for (final post in posts) {
+      final category = post.category;
+      progressByCategory[category] = progressByCategory[category] ?? 0;
+      if (completed.contains(post.id)) {
+        progressByCategory[category] = progressByCategory[category]! + 1;
+      }
+    }
+
+    // Convert to percentages
+    final categoryPercentages = <String, int>{};
+    for (final entry in progressByCategory.entries) {
+      final categoryPosts = posts.where((p) => p.category == entry.key).length;
+      if (categoryPosts > 0) {
+        categoryPercentages[entry.key] = ((entry.value / categoryPosts) * 100).round();
+      }
+    }
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -156,7 +178,7 @@ class AppHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            ...blogProvider.progressByCategory.entries.map((entry) {
+            ...categoryPercentages.entries.map((entry) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Row(

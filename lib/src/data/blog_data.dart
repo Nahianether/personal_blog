@@ -103,7 +103,7 @@ class BlogData {
     ),
   ];
 
-  static List<BlogPost> get posts => [
+  static List<BlogPost> get blogPosts => [
     BlogPost(
       id: 'class-concept',
       title: 'Understanding Classes in Dart',

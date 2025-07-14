@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/blog_provider.dart';
 import '../widgets/common/post_card.dart';
@@ -7,14 +7,14 @@ import '../widgets/common/category_chip.dart';
 import '../widgets/common/search_bar.dart';
 import '../widgets/common/app_header.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -27,92 +27,101 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Consumer<BlogProvider>(
-          builder: (context, blogProvider, child) {
-            return CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                // App Header
-                const SliverToBoxAdapter(
-                  child: AppHeader(),
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            // App Header
+            const SliverToBoxAdapter(
+              child: AppHeader(),
+            ),
+            
+            // Search Bar
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: ModernSearchBar(
+                  onSearchChanged: (query) {
+                    ref.read(blogActionsProvider).setSearchQuery(query);
+                  },
                 ),
-                
-                // Search Bar
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ModernSearchBar(
-                      onSearchChanged: (query) {
-                        blogProvider.setSearchQuery(query);
-                      },
+              ),
+            ),
+            
+            // Language Selector
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      'Language: ',
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    _buildLanguageChip(context, 'flutter', 'Flutter'),
+                    const SizedBox(width: 8),
+                    _buildLanguageChip(context, 'rust', 'Rust'),
+                  ],
                 ),
+              ),
+            ),
+            
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            
+            // Categories
+            Consumer(
+              builder: (context, ref, child) {
+                final categories = ref.watch(categoriesProvider);
+                final selectedCategory = ref.watch(selectedCategoryProvider);
                 
-                // Language Selector
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Language: ',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                        const SizedBox(width: 8),
-                        _buildLanguageChip(context, 'flutter', 'Flutter'),
-                        const SizedBox(width: 8),
-                        _buildLanguageChip(context, 'rust', 'Rust'),
-                      ],
-                    ),
-                  ),
-                ),
-                
-                const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                
-                // Categories
-                SliverToBoxAdapter(
+                return SliverToBoxAdapter(
                   child: SizedBox(
                     height: 50,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: blogProvider.categories.length + 1,
+                      itemCount: categories.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: CategoryChip(
                               label: 'All',
-                              isSelected: blogProvider.selectedCategory == 'all',
+                              isSelected: selectedCategory == 'all',
                               onTap: () {
-                                blogProvider.setSelectedCategory('all');
+                                ref.read(blogActionsProvider).setSelectedCategory('all');
                               },
                             ),
                           );
                         }
                         
-                        final category = blogProvider.categories[index - 1];
+                        final category = categories[index - 1];
                         return Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: CategoryChip(
                             label: category.name,
                             icon: category.icon,
-                            isSelected: blogProvider.selectedCategory == category.name,
+                            isSelected: selectedCategory == category.name,
                             onTap: () {
-                              blogProvider.setSelectedCategory(category.name);
+                              ref.read(blogActionsProvider).setSelectedCategory(category.name);
                             },
                           ),
                         );
                       },
                     ),
                   ),
-                ),
+                );
+              },
+            ),
+            
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            
+            // Posts Grid
+            Consumer(
+              builder: (context, ref, child) {
+                final filteredPosts = ref.watch(filteredPostsProvider);
                 
-                const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                
-                // Posts Grid
-                SliverPadding(
+                return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverGrid(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -123,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final post = blogProvider.filteredPosts[index];
+                        final post = filteredPosts[index];
                         return PostCard(
                           post: post,
                           onTap: () {
@@ -135,27 +144,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         );
                       },
-                      childCount: blogProvider.filteredPosts.length,
+                      childCount: filteredPosts.length,
                     ),
                   ),
-                ),
-                
-                const SliverToBoxAdapter(child: SizedBox(height: 100)),
-              ],
-            );
-          },
+                );
+              },
+            ),
+            
+            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+          ],
         ),
       ),
     );
   }
   
   Widget _buildLanguageChip(BuildContext context, String value, String label) {
-    final blogProvider = Provider.of<BlogProvider>(context);
-    final isSelected = blogProvider.selectedLanguage == value;
+    final selectedLanguage = ref.watch(selectedLanguageProvider);
+    final isSelected = selectedLanguage == value;
     
     return GestureDetector(
       onTap: () {
-        blogProvider.setSelectedLanguage(value);
+        ref.read(blogActionsProvider).setSelectedLanguage(value);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

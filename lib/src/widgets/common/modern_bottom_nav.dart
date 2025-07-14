@@ -19,7 +19,7 @@ class ModernBottomNav extends StatelessWidget {
         color: theme.colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: theme.colorScheme.outline.withOpacity(0.2),
+            color: theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -82,7 +82,7 @@ class ModernBottomNav extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isActive 
-              ? theme.colorScheme.primary.withOpacity(0.1)
+              ? theme.colorScheme.primary.withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
@@ -93,7 +93,7 @@ class ModernBottomNav extends StatelessWidget {
               isActive ? activeIcon : icon,
               color: isActive 
                   ? theme.colorScheme.primary 
-                  : theme.colorScheme.onSurface.withOpacity(0.6),
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.6),
               size: 24,
             ),
             const SizedBox(height: 4),
@@ -102,7 +102,7 @@ class ModernBottomNav extends StatelessWidget {
               style: theme.textTheme.labelSmall?.copyWith(
                 color: isActive 
                     ? theme.colorScheme.primary 
-                    : theme.colorScheme.onSurface.withOpacity(0.6),
+                    : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
