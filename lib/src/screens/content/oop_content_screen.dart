@@ -1,429 +1,297 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'base_content_screen.dart';
+import '../../widgets/content_index_tab.dart';
 
-class OOPContentScreen extends StatelessWidget {
+class OOPContentScreen extends BaseContentScreen {
   const OOPContentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Color(0xFF00BCD4),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.design_services,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'OOP Concepts',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF00BCD4), Color(0xFF0097A7)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Master OOP Concepts',
-                    style: GoogleFonts.inter(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Learn fundamental object-oriented programming principles',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
+  State<OOPContentScreen> createState() => _OOPContentScreenState();
+}
 
-            // Course Overview
-            _buildContentSection(
-              'Course Overview',
-              'Master Object-Oriented Programming concepts with Dart. Learn the fundamental principles that make code maintainable, scalable, and reusable.',
-              [],
-              showBullets: false,
-            ),
+class _OOPContentScreenState extends BaseContentScreenState<OOPContentScreen> {
+  
+  // Global keys for navigation
+  final GlobalKey _classObjectKey = GlobalKey();
+  final GlobalKey _inheritanceKey = GlobalKey();
+  final GlobalKey _polymorphismKey = GlobalKey();
+  final GlobalKey _abstractionKey = GlobalKey();
+  final GlobalKey _encapsulationKey = GlobalKey();
+  final GlobalKey _solidKey = GlobalKey();
+  final GlobalKey _designPatternsKey = GlobalKey();
+  final GlobalKey _gettersSettersKey = GlobalKey();
+  final GlobalKey _abstractClassesKey = GlobalKey();
+  final GlobalKey _interfacesKey = GlobalKey();
+  final GlobalKey _dependencyInjectionKey = GlobalKey();
+  final GlobalKey _crudKey = GlobalKey();
 
-            const SizedBox(height: 32),
+  @override
+  String get screenTitle => 'OOP Concepts';
 
-            // Core OOP Concepts
-            _buildModuleCard(
-              'Core OOP Concepts',
-              'Fundamental building blocks of object-oriented programming',
-              [
-                'Classes and Objects',
-                'Inheritance',
-                'Polymorphism',
-                'Abstraction',
-                'Encapsulation',
-              ],
-              const Color(0xFF3498DB),
-              Icons.architecture,
-            ),
+  @override
+  String get screenSubtitle => 'Learn fundamental object-oriented programming principles';
 
-            const SizedBox(height: 24),
+  @override
+  IconData get screenIcon => Icons.design_services;
 
-            // Class Deep Dive
-            _buildTopicCard(
-              'Classes & Objects',
-              'Understanding the blueprint and instances in OOP',
-              _buildClassObjectContent(),
-            ),
+  @override
+  Color get screenColor => const Color(0xFF00BCD4);
 
-            const SizedBox(height: 24),
+  @override
+  List<IndexItem> get indexItems => [
+    IndexItem(
+      id: 'classes_objects',
+      title: 'Classes & Objects',
+      subtitle: 'Understanding the blueprint and instances in OOP',
+      icon: Icons.class_,
+      color: const Color(0xFF00BCD4),
+      globalKey: _classObjectKey,
+    ),
+    IndexItem(
+      id: 'inheritance',
+      title: 'Inheritance',
+      subtitle: 'Code reusability through parent-child relationships',
+      icon: Icons.account_tree,
+      color: const Color(0xFF00BCD4),
+      globalKey: _inheritanceKey,
+    ),
+    IndexItem(
+      id: 'polymorphism',
+      title: 'Polymorphism',
+      subtitle: 'One interface, multiple implementations',
+      icon: Icons.transform,
+      color: const Color(0xFF00BCD4),
+      globalKey: _polymorphismKey,
+    ),
+    IndexItem(
+      id: 'abstraction',
+      title: 'Abstraction',
+      subtitle: 'Hiding implementation details and showing functionality',
+      icon: Icons.visibility_off,
+      color: const Color(0xFF00BCD4),
+      globalKey: _abstractionKey,
+    ),
+    IndexItem(
+      id: 'encapsulation',
+      title: 'Encapsulation',
+      subtitle: 'Data hiding and controlled access',
+      icon: Icons.lock,
+      color: const Color(0xFF00BCD4),
+      globalKey: _encapsulationKey,
+    ),
+    IndexItem(
+      id: 'solid',
+      title: 'SOLID Principles',
+      subtitle: 'Design principles for maintainable and scalable code',
+      icon: Icons.foundation,
+      color: const Color(0xFF00BCD4),
+      globalKey: _solidKey,
+    ),
+    IndexItem(
+      id: 'design_patterns',
+      title: 'Design Patterns',
+      subtitle: 'Common solutions to recurring design problems',
+      icon: Icons.pattern,
+      color: const Color(0xFF00BCD4),
+      globalKey: _designPatternsKey,
+    ),
+    IndexItem(
+      id: 'getters_setters',
+      title: 'Getters and Setters',
+      subtitle: 'Controlled access to class properties with validation',
+      icon: Icons.vpn_key,
+      color: const Color(0xFF00BCD4),
+      globalKey: _gettersSettersKey,
+    ),
+    IndexItem(
+      id: 'abstract_classes',
+      title: 'Abstract Classes',
+      subtitle: 'Classes that cannot be instantiated and serve as base templates',
+      icon: Icons.category,
+      color: const Color(0xFF00BCD4),
+      globalKey: _abstractClassesKey,
+    ),
+    IndexItem(
+      id: 'interfaces',
+      title: 'Interfaces',
+      subtitle: 'Contracts that define what methods a class must implement',
+      icon: Icons.api,
+      color: const Color(0xFF00BCD4),
+      globalKey: _interfacesKey,
+    ),
+    IndexItem(
+      id: 'dependency_injection',
+      title: 'Dependency Injection',
+      subtitle: 'Design pattern for achieving loose coupling between classes',
+      icon: Icons.account_tree_outlined,
+      color: const Color(0xFF00BCD4),
+      globalKey: _dependencyInjectionKey,
+    ),
+    IndexItem(
+      id: 'crud',
+      title: 'CRUD Operations',
+      subtitle: 'Create, Read, Update, Delete - fundamental data operations',
+      icon: Icons.storage,
+      color: const Color(0xFF00BCD4),
+      globalKey: _crudKey,
+    ),
+  ];
 
-            // Inheritance Deep Dive
-            _buildTopicCard(
-              'Inheritance',
-              'Code reusability through parent-child relationships',
-              _buildInheritanceContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Polymorphism Deep Dive
-            _buildTopicCard(
-              'Polymorphism',
-              'One interface, multiple implementations',
-              _buildPolymorphismContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Abstraction Deep Dive
-            _buildTopicCard(
-              'Abstraction',
-              'Hiding implementation details and showing functionality',
-              _buildAbstractionContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Encapsulation Deep Dive
-            _buildTopicCard(
-              'Encapsulation',
-              'Data hiding and controlled access',
-              _buildEncapsulationContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // SOLID Principles
-            _buildTopicCard(
-              'SOLID Principles',
-              'Design principles for maintainable and scalable code',
-              _buildSOLIDContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Design Patterns
-            _buildTopicCard(
-              'Design Patterns',
-              'Common solutions to recurring design problems in software development',
-              _buildDesignPatternsContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Getters and Setters
-            _buildTopicCard(
-              'Getters and Setters',
-              'Controlled access to class properties with validation',
-              _buildGettersSettersContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Abstract Classes
-            _buildTopicCard(
-              'Abstract Classes',
-              'Classes that cannot be instantiated and serve as base templates',
-              _buildAbstractClassesContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Interfaces
-            _buildTopicCard(
-              'Interfaces',
-              'Contracts that define what methods a class must implement',
-              _buildInterfacesContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Dependency Injection
-            _buildTopicCard(
-              'Dependency Injection',
-              'Design pattern for achieving loose coupling between classes',
-              _buildDependencyInjectionContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // CRUD Operations
-            _buildTopicCard(
-              'CRUD Operations',
-              'Create, Read, Update, Delete - fundamental data operations',
-              _buildCRUDContent(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContentSection(String title, String description, List<String> items, {bool showBullets = true}) {
+  @override
+  Widget buildContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+        // Course Overview
+        buildContentSection(
+          'Course Overview',
+          'Master Object-Oriented Programming concepts with Dart. Learn the fundamental principles that make code maintainable, scalable, and reusable.',
+          [],
+          showBullets: false,
         ),
-        const SizedBox(height: 16),
-        Text(
-          description,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white70,
-            height: 1.5,
-          ),
+
+        const SizedBox(height: 32),
+
+        // Core OOP Concepts
+        buildModuleCard(
+          'Core OOP Concepts',
+          'Fundamental building blocks of object-oriented programming',
+          [
+            'Classes and Objects',
+            'Inheritance',
+            'Polymorphism',
+            'Abstraction',
+            'Encapsulation',
+          ],
+          const Color(0xFF3498DB),
+          Icons.architecture,
         ),
-        if (showBullets && items.isNotEmpty) ...[
-          const SizedBox(height: 20),
-          ...items.map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF00BCD4),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        item,
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
-        ],
+
+        const SizedBox(height: 24),
+
+        // Class Deep Dive
+        buildTopicCard(
+          'Classes & Objects',
+          'Understanding the blueprint and instances in OOP',
+          _buildClassObjectContent(),
+          key: _classObjectKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Inheritance Deep Dive
+        buildTopicCard(
+          'Inheritance',
+          'Code reusability through parent-child relationships',
+          _buildInheritanceContent(),
+          key: _inheritanceKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Polymorphism Deep Dive
+        buildTopicCard(
+          'Polymorphism',
+          'One interface, multiple implementations',
+          _buildPolymorphismContent(),
+          key: _polymorphismKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Abstraction Deep Dive
+        buildTopicCard(
+          'Abstraction',
+          'Hiding implementation details and showing functionality',
+          _buildAbstractionContent(),
+          key: _abstractionKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Encapsulation Deep Dive
+        buildTopicCard(
+          'Encapsulation',
+          'Data hiding and controlled access',
+          _buildEncapsulationContent(),
+          key: _encapsulationKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // SOLID Principles
+        buildTopicCard(
+          'SOLID Principles',
+          'Design principles for maintainable and scalable code',
+          _buildSOLIDContent(),
+          key: _solidKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Design Patterns
+        buildTopicCard(
+          'Design Patterns',
+          'Common solutions to recurring design problems in software development',
+          _buildDesignPatternsContent(),
+          key: _designPatternsKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Getters and Setters
+        buildTopicCard(
+          'Getters and Setters',
+          'Controlled access to class properties with validation',
+          _buildGettersSettersContent(),
+          key: _gettersSettersKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Abstract Classes
+        buildTopicCard(
+          'Abstract Classes',
+          'Classes that cannot be instantiated and serve as base templates',
+          _buildAbstractClassesContent(),
+          key: _abstractClassesKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Interfaces
+        buildTopicCard(
+          'Interfaces',
+          'Contracts that define what methods a class must implement',
+          _buildInterfacesContent(),
+          key: _interfacesKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Dependency Injection
+        buildTopicCard(
+          'Dependency Injection',
+          'Design pattern for achieving loose coupling between classes',
+          _buildDependencyInjectionContent(),
+          key: _dependencyInjectionKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // CRUD Operations
+        buildTopicCard(
+          'CRUD Operations',
+          'Create, Read, Update, Delete - fundamental data operations',
+          _buildCRUDContent(),
+          key: _crudKey,
+        ),
       ],
     );
   }
 
-  Widget _buildModuleCard(String title, String description, List<String> topics, Color color, IconData icon) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: topics
-                .map((topic) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: color.withValues(alpha: 0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Text(
-                        topic,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: color,
-                        ),
-                      ),
-                    ))
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildTopicCard(String title, String description, Widget content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color(0xFF00BCD4).withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF00BCD4).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.school,
-                  color: Color(0xFF00BCD4),
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          content,
-        ],
-      ),
-    );
-  }
 
   Widget _buildClassObjectContent() {
     return Column(

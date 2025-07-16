@@ -801,7 +801,7 @@ class _LandingPageState extends State<LandingPage> {
             _buildSocialLink(
               Icons.language,
               'https://intishar.xyz',
-              'Website',
+              'Portfolio',
               const Color(0xFF9B59B6),
             ),
           ],
@@ -811,31 +811,64 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildSocialLink(IconData icon, String url, String tooltip, Color color) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => _launchURL(url),
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: const Color(0xFF2C3E50),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: color.withValues(alpha: 0.3),
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
+    String displayUrl = url;
+    if (url.startsWith('mailto:')) {
+      displayUrl = url.substring(7); // Remove 'mailto:' prefix
+    } else if (url.startsWith('https://')) {
+      displayUrl = url.substring(8); // Remove 'https://' prefix
+    }
+
+    return Tooltip(
+      message: '$tooltip\n$displayUrl',
+      textStyle: GoogleFonts.inter(
+        fontSize: 14,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2C3E50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: color.withValues(alpha: 0.5),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
-          child: Icon(
-            icon,
-            size: 24,
-            color: Colors.white70,
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      preferBelow: false,
+      verticalOffset: 16,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => _launchURL(url),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFF2C3E50),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: color.withValues(alpha: 0.3),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Icon(
+              icon,
+              size: 24,
+              color: Colors.white70,
+            ),
           ),
         ),
       ),

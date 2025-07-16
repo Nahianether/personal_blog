@@ -1,249 +1,163 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'base_content_screen.dart';
+import '../../widgets/content_index_tab.dart';
 
-class OthersContentScreen extends StatelessWidget {
+class OthersContentScreen extends BaseContentScreen {
   const OthersContentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Color(0xFF9B59B6),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.psychology,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Other Concepts',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF9B59B6), Color(0xFF8E44AD)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Explore Other Concepts',
-                    style: GoogleFonts.inter(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Discover additional programming concepts and technologies',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
-            
-            // Data Structures & Algorithms
-            _buildTopicCard(
-              'Data Structures & Algorithms',
-              'Essential computer science fundamentals for efficient problem solving',
-              _buildDataStructuresContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Clean Code Principles
-            _buildTopicCard(
-              'Clean Code Principles',
-              'Writing maintainable, readable, and sustainable code',
-              _buildCleanCodeContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Git & Version Control
-            _buildTopicCard(
-              'Git & Version Control',
-              'Professional development workflow and collaboration',
-              _buildGitContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Software Architecture Patterns
-            _buildTopicCard(
-              'Software Architecture Patterns',
-              'Structural patterns for building scalable applications',
-              _buildArchitectureContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // System Design Basics
-            _buildTopicCard(
-              'System Design Basics',
-              'Scalability, databases, caching, and distributed systems',
-              _buildSystemDesignContent(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<OthersContentScreen> createState() => _OthersContentScreenState();
+}
 
-  Widget _buildContentSection(String title, String description, List<String> items) {
+class _OthersContentScreenState extends BaseContentScreenState<OthersContentScreen> {
+  
+  // Global keys for navigation
+  final GlobalKey _dataStructuresKey = GlobalKey();
+  final GlobalKey _cleanCodeKey = GlobalKey();
+  final GlobalKey _gitKey = GlobalKey();
+  final GlobalKey _architectureKey = GlobalKey();
+  final GlobalKey _systemDesignKey = GlobalKey();
+
+  @override
+  String get screenTitle => 'Other Concepts';
+
+  @override
+  String get screenSubtitle => 'Discover additional programming concepts and technologies';
+
+  @override
+  IconData get screenIcon => Icons.psychology;
+
+  @override
+  Color get screenColor => const Color(0xFF673AB7);
+
+  @override
+  List<IndexItem> get indexItems => [
+    IndexItem(
+      id: 'data_structures',
+      title: 'Data Structures & Algorithms',
+      subtitle: 'Essential computer science fundamentals for efficient problem solving',
+      icon: Icons.storage,
+      color: const Color(0xFF673AB7),
+      globalKey: _dataStructuresKey,
+    ),
+    IndexItem(
+      id: 'clean_code',
+      title: 'Clean Code Principles',
+      subtitle: 'Writing maintainable, readable, and sustainable code',
+      icon: Icons.code,
+      color: const Color(0xFF673AB7),
+      globalKey: _cleanCodeKey,
+    ),
+    IndexItem(
+      id: 'git',
+      title: 'Git & Version Control',
+      subtitle: 'Professional development workflow and collaboration',
+      icon: Icons.merge_type,
+      color: const Color(0xFF673AB7),
+      globalKey: _gitKey,
+    ),
+    IndexItem(
+      id: 'architecture',
+      title: 'Software Architecture Patterns',
+      subtitle: 'Structural patterns for building scalable applications',
+      icon: Icons.architecture,
+      color: const Color(0xFF673AB7),
+      globalKey: _architectureKey,
+    ),
+    IndexItem(
+      id: 'system_design',
+      title: 'System Design Basics',
+      subtitle: 'Scalability, databases, caching, and distributed systems',
+      icon: Icons.account_tree,
+      color: const Color(0xFF673AB7),
+      globalKey: _systemDesignKey,
+    ),
+  ];
+
+  @override
+  Widget buildContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+        // Course Overview
+        buildContentSection(
+          'Course Overview',
+          'Master essential programming concepts beyond the basics. Learn about data structures, clean code principles, version control, software architecture, and system design.',
+          [],
+          showBullets: false,
         ),
-        const SizedBox(height: 16),
-        Text(
-          description,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white70,
-            height: 1.5,
-          ),
+
+        const SizedBox(height: 32),
+
+        // Core Concepts
+        buildModuleCard(
+          'Core Concepts',
+          'Fundamental programming concepts for professional development',
+          [
+            'Data Structures & Algorithms',
+            'Clean Code Principles',
+            'Git & Version Control',
+            'Software Architecture',
+            'System Design',
+          ],
+          const Color(0xFF9C27B0),
+          Icons.build,
         ),
-        const SizedBox(height: 20),
-        ...items.map((item) => Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: Row(
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF9B59B6),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  item,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )),
+
+        const SizedBox(height: 24),
+
+        // Data Structures & Algorithms
+        buildTopicCard(
+          'Data Structures & Algorithms',
+          'Essential computer science fundamentals for efficient problem solving',
+          _buildDataStructuresContent(),
+          key: _dataStructuresKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Clean Code Principles
+        buildTopicCard(
+          'Clean Code Principles',
+          'Writing maintainable, readable, and sustainable code',
+          _buildCleanCodeContent(),
+          key: _cleanCodeKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Git & Version Control
+        buildTopicCard(
+          'Git & Version Control',
+          'Professional development workflow and collaboration',
+          _buildGitContent(),
+          key: _gitKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Software Architecture Patterns
+        buildTopicCard(
+          'Software Architecture Patterns',
+          'Structural patterns for building scalable applications',
+          _buildArchitectureContent(),
+          key: _architectureKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // System Design Basics
+        buildTopicCard(
+          'System Design Basics',
+          'Scalability, databases, caching, and distributed systems',
+          _buildSystemDesignContent(),
+          key: _systemDesignKey,
+        ),
       ],
     );
   }
 
-  Widget _buildTopicCard(String title, String description, Widget content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color(0xFF9B59B6).withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF9B59B6).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.lightbulb,
-                  color: Color(0xFF9B59B6),
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          content,
-        ],
-      ),
-    );
-  }
 
   Widget _buildDefinitionBox(String title, String content) {
     return Container(
@@ -253,7 +167,7 @@ class OthersContentScreen extends StatelessWidget {
         color: const Color(0xFF34495E),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFF9B59B6).withValues(alpha: 0.3),
+          color: screenColor.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -265,7 +179,7 @@ class OthersContentScreen extends StatelessWidget {
             style: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF9B59B6),
+              color: screenColor,
             ),
           ),
           const SizedBox(height: 8),
@@ -353,8 +267,8 @@ class OthersContentScreen extends StatelessWidget {
                 width: 6,
                 height: 6,
                 margin: const EdgeInsets.only(top: 6),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF9B59B6),
+                decoration: BoxDecoration(
+                  color: screenColor,
                   shape: BoxShape.circle,
                 ),
               ),

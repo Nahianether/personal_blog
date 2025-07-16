@@ -1,437 +1,333 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'base_content_screen.dart';
+import '../../widgets/content_index_tab.dart';
 
-class FlutterContentScreen extends StatelessWidget {
+class FlutterContentScreen extends BaseContentScreen {
   const FlutterContentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Color(0xFFE91E63),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.phone_android,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Flutter Development',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFE91E63), Color(0xFFAD1457)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Master Flutter Development',
-                    style: GoogleFonts.inter(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Build beautiful, fast, and cross-platform mobile applications',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
+  State<FlutterContentScreen> createState() => _FlutterContentScreenState();
+}
 
-            // Course Overview
-            _buildContentSection(
-              'Course Overview',
-              'Master Flutter development with comprehensive coverage of mobile app development, from basics to advanced topics.',
-              [],
-              showBullets: false,
-            ),
+class _FlutterContentScreenState extends BaseContentScreenState<FlutterContentScreen> {
+  
+  // Global keys for navigation
+  final GlobalKey _androidLifecycleKey = GlobalKey();
+  final GlobalKey _widgetTreeKey = GlobalKey();
+  final GlobalKey _streamsKey = GlobalKey();
+  final GlobalKey _isolatesKey = GlobalKey();
+  final GlobalKey _riverpodKey = GlobalKey();
+  final GlobalKey _providerVsRiverpodKey = GlobalKey();
+  final GlobalKey _methodChannelKey = GlobalKey();
+  final GlobalKey _navigationKey = GlobalKey();
+  final GlobalKey _customAnimationsKey = GlobalKey();
+  final GlobalKey _firebaseKey = GlobalKey();
+  final GlobalKey _googleMapsKey = GlobalKey();
+  final GlobalKey _databaseKey = GlobalKey();
+  final GlobalKey _testingKey = GlobalKey();
+  final GlobalKey _performanceKey = GlobalKey();
+  final GlobalKey _developmentToolsKey = GlobalKey();
 
-            const SizedBox(height: 32),
+  @override
+  String get screenTitle => 'Flutter Development';
 
-            // Android Lifecycle
-            _buildTopicCard(
-              'Android Lifecycle',
-              'Understanding the Android activity lifecycle',
-              _buildAndroidLifecycleContent(),
-            ),
+  @override
+  String get screenSubtitle => 'Build beautiful, fast, and cross-platform mobile applications';
 
-            const SizedBox(height: 24),
+  @override
+  IconData get screenIcon => Icons.phone_android;
 
-            // Flutter Widget Tree
-            _buildTopicCard(
-              'Flutter Widget Tree',
-              'Understanding how Flutter builds and manages widget trees',
-              _buildWidgetTreeContent(),
-            ),
+  @override
+  Color get screenColor => const Color(0xFFE91E63);
 
-            const SizedBox(height: 24),
+  @override
+  List<IndexItem> get indexItems => [
+    IndexItem(
+      id: 'android_lifecycle',
+      title: 'Android Lifecycle',
+      subtitle: 'Understanding the Android activity lifecycle methods',
+      icon: Icons.refresh,
+      color: const Color(0xFFE91E63),
+      globalKey: _androidLifecycleKey,
+    ),
+    IndexItem(
+      id: 'widget_tree',
+      title: 'Flutter Widget Tree',
+      subtitle: 'How Flutter builds and manages widget hierarchies',
+      icon: Icons.account_tree,
+      color: const Color(0xFFE91E63),
+      globalKey: _widgetTreeKey,
+    ),
+    IndexItem(
+      id: 'streams',
+      title: 'Streams',
+      subtitle: 'Asynchronous data handling with Dart streams',
+      icon: Icons.stream,
+      color: const Color(0xFFE91E63),
+      globalKey: _streamsKey,
+    ),
+    IndexItem(
+      id: 'isolates',
+      title: 'Isolates',
+      subtitle: 'Concurrent programming and heavy computation',
+      icon: Icons.memory,
+      color: const Color(0xFFE91E63),
+      globalKey: _isolatesKey,
+    ),
+    IndexItem(
+      id: 'riverpod',
+      title: 'Riverpod State Management',
+      subtitle: 'Modern state management with Riverpod providers',
+      icon: Icons.settings_input_component,
+      color: const Color(0xFFE91E63),
+      globalKey: _riverpodKey,
+    ),
+    IndexItem(
+      id: 'provider_vs_riverpod',
+      title: 'Provider vs Riverpod',
+      subtitle: 'Comparing different state management approaches',
+      icon: Icons.compare_arrows,
+      color: const Color(0xFFE91E63),
+      globalKey: _providerVsRiverpodKey,
+    ),
+    IndexItem(
+      id: 'method_channel',
+      title: 'Method Channel',
+      subtitle: 'Platform-specific code integration',
+      icon: Icons.link,
+      color: const Color(0xFFE91E63),
+      globalKey: _methodChannelKey,
+    ),
+    IndexItem(
+      id: 'navigation',
+      title: 'Navigation (Go Router)',
+      subtitle: 'Modern navigation with URL-based routing',
+      icon: Icons.navigation,
+      color: const Color(0xFFE91E63),
+      globalKey: _navigationKey,
+    ),
+    IndexItem(
+      id: 'custom_animations',
+      title: 'Custom Animations',
+      subtitle: 'Building beautiful animations with Flutter framework',
+      icon: Icons.animation,
+      color: const Color(0xFFE91E63),
+      globalKey: _customAnimationsKey,
+    ),
+    IndexItem(
+      id: 'firebase',
+      title: 'Firebase Integration',
+      subtitle: 'Backend services with Firebase Cloud Messaging',
+      icon: Icons.cloud,
+      color: const Color(0xFFE91E63),
+      globalKey: _firebaseKey,
+    ),
+    IndexItem(
+      id: 'google_maps',
+      title: 'Google Maps Integration',
+      subtitle: 'Location services and interactive maps',
+      icon: Icons.map,
+      color: const Color(0xFFE91E63),
+      globalKey: _googleMapsKey,
+    ),
+    IndexItem(
+      id: 'database',
+      title: 'Database Solutions',
+      subtitle: 'Local storage with Hive, Isar, and SQLite',
+      icon: Icons.storage,
+      color: const Color(0xFFE91E63),
+      globalKey: _databaseKey,
+    ),
+    IndexItem(
+      id: 'testing',
+      title: 'Testing in Flutter',
+      subtitle: 'Unit, widget, and integration testing approaches',
+      icon: Icons.bug_report,
+      color: const Color(0xFFE91E63),
+      globalKey: _testingKey,
+    ),
+    IndexItem(
+      id: 'performance',
+      title: 'Performance Optimization',
+      subtitle: 'Building fast and efficient Flutter applications',
+      icon: Icons.speed,
+      color: const Color(0xFFE91E63),
+      globalKey: _performanceKey,
+    ),
+    IndexItem(
+      id: 'development_tools',
+      title: 'Development Tools & Tips',
+      subtitle: 'Hot reload, SafeArea, and development best practices',
+      icon: Icons.build,
+      color: const Color(0xFFE91E63),
+      globalKey: _developmentToolsKey,
+    ),
+  ];
 
-            // Streams
-            _buildTopicCard(
-              'Streams',
-              'Asynchronous data handling with Dart streams',
-              _buildStreamsContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Isolates
-            _buildTopicCard(
-              'Isolates',
-              'Concurrent programming and heavy computation',
-              _buildIsolatesContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Riverpod
-            _buildTopicCard(
-              'Riverpod State Management',
-              'Modern state management with Riverpod',
-              _buildRiverpodContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Provider vs Riverpod
-            _buildTopicCard(
-              'Provider vs Riverpod',
-              'Comparing different state management approaches',
-              _buildProviderVsRiverpodContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Method Channel
-            _buildTopicCard(
-              'Method Channel',
-              'Platform-specific code integration',
-              _buildMethodChannelContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Navigation
-            _buildTopicCard(
-              'Navigation (Go Router)',
-              'Modern navigation with URL-based routing',
-              _buildNavigationContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Custom Animations
-            _buildTopicCard(
-              'Custom Animations',
-              'Building beautiful animations with Flutter animation framework',
-              _buildCustomAnimationsContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Firebase Integration
-            _buildTopicCard(
-              'Firebase Integration',
-              'Backend services with Firebase Cloud Messaging',
-              _buildFirebaseContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Google Maps
-            _buildTopicCard(
-              'Google Maps Integration',
-              'Location services and interactive maps',
-              _buildGoogleMapsContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Database Solutions
-            _buildTopicCard(
-              'Database Solutions',
-              'Local storage with Hive, Isar, and SQLite',
-              _buildDatabaseContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Testing Strategies
-            _buildTopicCard(
-              'Testing in Flutter',
-              'Unit, widget, and integration testing approaches',
-              _buildTestingContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Performance & Optimization
-            _buildTopicCard(
-              'Performance Optimization',
-              'Building fast and efficient Flutter applications',
-              _buildPerformanceContent(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Development Tools
-            _buildTopicCard(
-              'Development Tools & Tips',
-              'Hot reload, SafeArea, and development best practices',
-              _buildDevelopmentToolsContent(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContentSection(String title, String description, List<String> items, {bool showBullets = true}) {
+  @override
+  Widget buildContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+        // Course Overview
+        buildContentSection(
+          'Course Overview',
+          'Master Flutter development with comprehensive coverage of mobile app development, from basics to advanced topics.',
+          [],
+          showBullets: false,
         ),
-        const SizedBox(height: 16),
-        Text(
-          description,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white70,
-            height: 1.5,
-          ),
+
+        const SizedBox(height: 32),
+
+        // Android Lifecycle
+        buildTopicCard(
+          'Android Lifecycle',
+          'Understanding the Android activity lifecycle',
+          _buildAndroidLifecycleContent(),
+          key: _androidLifecycleKey,
         ),
-        if (showBullets && items.isNotEmpty) ...[
-          const SizedBox(height: 20),
-          ...items.map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFE91E63),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        item,
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
-        ],
+
+        const SizedBox(height: 24),
+
+        // Flutter Widget Tree
+        buildTopicCard(
+          'Flutter Widget Tree',
+          'Understanding how Flutter builds and manages widget trees',
+          _buildWidgetTreeContent(),
+          key: _widgetTreeKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Streams
+        buildTopicCard(
+          'Streams',
+          'Asynchronous data handling with Dart streams',
+          _buildStreamsContent(),
+          key: _streamsKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Isolates
+        buildTopicCard(
+          'Isolates',
+          'Concurrent programming and heavy computation',
+          _buildIsolatesContent(),
+          key: _isolatesKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Riverpod
+        buildTopicCard(
+          'Riverpod State Management',
+          'Modern state management with Riverpod',
+          _buildRiverpodContent(),
+          key: _riverpodKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Provider vs Riverpod
+        buildTopicCard(
+          'Provider vs Riverpod',
+          'Comparing different state management approaches',
+          _buildProviderVsRiverpodContent(),
+          key: _providerVsRiverpodKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Method Channel
+        buildTopicCard(
+          'Method Channel',
+          'Platform-specific code integration',
+          _buildMethodChannelContent(),
+          key: _methodChannelKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Navigation
+        buildTopicCard(
+          'Navigation (Go Router)',
+          'Modern navigation with URL-based routing',
+          _buildNavigationContent(),
+          key: _navigationKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Custom Animations
+        buildTopicCard(
+          'Custom Animations',
+          'Building beautiful animations with Flutter animation framework',
+          _buildCustomAnimationsContent(),
+          key: _customAnimationsKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Firebase Integration
+        buildTopicCard(
+          'Firebase Integration',
+          'Backend services with Firebase Cloud Messaging',
+          _buildFirebaseContent(),
+          key: _firebaseKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Google Maps
+        buildTopicCard(
+          'Google Maps Integration',
+          'Location services and interactive maps',
+          _buildGoogleMapsContent(),
+          key: _googleMapsKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Database Solutions
+        buildTopicCard(
+          'Database Solutions',
+          'Local storage with Hive, Isar, and SQLite',
+          _buildDatabaseContent(),
+          key: _databaseKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Testing Strategies
+        buildTopicCard(
+          'Testing in Flutter',
+          'Unit, widget, and integration testing approaches',
+          _buildTestingContent(),
+          key: _testingKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Performance & Optimization
+        buildTopicCard(
+          'Performance Optimization',
+          'Building fast and efficient Flutter applications',
+          _buildPerformanceContent(),
+          key: _performanceKey,
+        ),
+
+        const SizedBox(height: 24),
+
+        // Development Tools
+        buildTopicCard(
+          'Development Tools & Tips',
+          'Hot reload, SafeArea, and development best practices',
+          _buildDevelopmentToolsContent(),
+          key: _developmentToolsKey,
+        ),
       ],
-    );
-  }
-
-  Widget _buildModuleCard(String title, String description, List<String> topics, Color color, IconData icon) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: topics
-                .map((topic) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: color.withValues(alpha: 0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Text(
-                        topic,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: color,
-                        ),
-                      ),
-                    ))
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopicCard(String title, String description, Widget content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color(0xFFE91E63).withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE91E63).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.school,
-                  color: Color(0xFFE91E63),
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          content,
-        ],
-      ),
     );
   }
 
@@ -729,321 +625,6 @@ context.push('/settings');''',
           'Declarative route definition and programmatic navigation.',
         ),
       ],
-    );
-  }
-
-  Widget _buildDefinitionBox(String title, String content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF34495E),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFFE91E63).withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFFE91E63),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            content,
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-              height: 1.4,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCodeExample(String title, String code, String explanation) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E1E1E),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.white.withValues(alpha: 0.1),
-              width: 1,
-            ),
-          ),
-          child: Text(
-            code,
-            style: GoogleFonts.sourceCodePro(
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xFF7FB069),
-              height: 1.4,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          explanation,
-          style: GoogleFonts.inter(
-            fontSize: 13,
-            fontWeight: FontWeight.w400,
-            color: Colors.white60,
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildKeyPoints(List<String> points) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Key Points',
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 12),
-        ...points.map((point) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    margin: const EdgeInsets.only(top: 6),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE91E63),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      point,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-      ],
-    );
-  }
-
-  Widget _buildLifecycleMethod(String method, String description) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 6,
-            height: 6,
-            margin: const EdgeInsets.only(top: 6),
-            decoration: const BoxDecoration(
-              color: Color(0xFFE91E63),
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white70,
-                ),
-                children: [
-                  TextSpan(
-                    text: '$method: ',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFE91E63),
-                    ),
-                  ),
-                  TextSpan(text: description),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProviderType(String type, String description, String example) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE91E63),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  type,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  description,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1E1E1E),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              example,
-              style: GoogleFonts.sourceCodePro(
-                fontSize: 12,
-                color: const Color(0xFF7FB069),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildComparisonSection(String title, String providerDesc, String riverpodDesc) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFFE91E63),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF34495E),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Provider',
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        providerDesc,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF34495E),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Riverpod',
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        riverpodDesc,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -1525,6 +1106,321 @@ SafeArea(
     );
   }
 
+  Widget _buildDefinitionBox(String title, String content) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF34495E),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: screenColor.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: screenColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            content,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.white70,
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCodeExample(String title, String code, String explanation) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFF1E1E1E),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.1),
+              width: 1,
+            ),
+          ),
+          child: Text(
+            code,
+            style: GoogleFonts.sourceCodePro(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFF7FB069),
+              height: 1.4,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          explanation,
+          style: GoogleFonts.inter(
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            color: Colors.white60,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildKeyPoints(List<String> points) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Key Points',
+          style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 12),
+        ...points.map((point) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    margin: const EdgeInsets.only(top: 6),
+                    decoration: BoxDecoration(
+                      color: screenColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      point,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+      ],
+    );
+  }
+
+  Widget _buildLifecycleMethod(String method, String description) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            margin: const EdgeInsets.only(top: 6),
+            decoration: BoxDecoration(
+              color: screenColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white70,
+                ),
+                children: [
+                  TextSpan(
+                    text: '$method: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: screenColor,
+                    ),
+                  ),
+                  TextSpan(text: description),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProviderType(String type, String description, String example) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: screenColor,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  type,
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  description,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1E1E1E),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              example,
+              style: GoogleFonts.sourceCodePro(
+                fontSize: 12,
+                color: const Color(0xFF7FB069),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComparisonSection(String title, String providerDesc, String riverpodDesc) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: screenColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF34495E),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Provider',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        providerDesc,
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF34495E),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Riverpod',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        riverpodDesc,
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDatabaseComparison(String name, String type, String performance, String useCase) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -1532,7 +1428,7 @@ SafeArea(
         color: const Color(0xFF34495E),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFFE91E63).withValues(alpha: 0.2),
+          color: screenColor.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -1544,7 +1440,7 @@ SafeArea(
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE91E63),
+                  color: screenColor,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
@@ -1598,8 +1494,8 @@ SafeArea(
             width: 6,
             height: 6,
             margin: const EdgeInsets.only(top: 6),
-            decoration: const BoxDecoration(
-              color: Color(0xFFE91E63),
+            decoration: BoxDecoration(
+              color: screenColor,
               shape: BoxShape.circle,
             ),
           ),
@@ -1615,9 +1511,9 @@ SafeArea(
                 children: [
                   TextSpan(
                     text: '$type: ',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFFE91E63),
+                      color: screenColor,
                     ),
                   ),
                   TextSpan(text: description),
@@ -1641,7 +1537,7 @@ SafeArea(
             style: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFFE91E63),
+              color: screenColor,
             ),
           ),
           const SizedBox(height: 4),
@@ -1674,7 +1570,7 @@ SafeArea(
             style: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFFE91E63),
+              color: screenColor,
             ),
           ),
           const SizedBox(height: 4),

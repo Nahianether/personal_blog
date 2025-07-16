@@ -1,410 +1,287 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'base_content_screen.dart';
+import '../../widgets/content_index_tab.dart';
 
-class RustContentScreen extends StatelessWidget {
+class RustContentScreen extends BaseContentScreen {
   const RustContentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFF8A3C),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.code,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Rust Programming',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFFF8A3C), Color(0xFFFF5722)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Master Rust Programming',
-                    style: GoogleFonts.inter(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Build fast, safe, and concurrent systems programming solutions',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
-            
-            // Course Overview
-            _buildContentSection(
-              'Course Overview',
-              'This comprehensive Rust course covers everything from fundamentals to advanced topics. Based on Google\'s Comprehensive Rust curriculum.',
-              [],
-              showBullets: false,
-            ),
-            
-            const SizedBox(height: 32),
-            
-            // Rust Fundamentals
-            _buildModuleCard(
-              'Rust Fundamentals',
-              'Basic syntax, types, and core concepts',
-              [
-                'Variables and mutability',
-                'Data types and type system',
-                'Functions and control flow',
-                'Ownership and borrowing',
-                'References and lifetimes',
-                'Structs and enums',
-              ],
-              const Color(0xFFE74C3C),
-              Icons.foundation,
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Tuple Structs Deep Dive
-            _buildTopicCard(
-              'Tuple Structs',
-              'Learn about tuple structs and the newtype pattern for type safety',
-              _buildTupleStructsContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Generics and Traits
-            _buildTopicCard(
-              'Generics and Trait System',
-              'Write flexible and reusable code with Rust generics and traits',
-              _buildGenericsContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Error Handling
-            _buildTopicCard(
-              'Error Handling',
-              'Robust error handling with Result<T, E> and Option<T>',
-              _buildErrorHandlingContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Pattern Matching
-            _buildTopicCard(
-              'Pattern Matching',
-              'Powerful pattern matching with match expressions',
-              _buildPatternMatchingContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Smart Pointers
-            _buildTopicCard(
-              'Smart Pointers',
-              'Memory management with Box, Rc, and Arc',
-              _buildSmartPointersContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Concurrency
-            _buildTopicCard(
-              'Concurrency and Async',
-              'Parallel programming and async/await in Rust',
-              _buildConcurrencyContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Ownership Deep Dive
-            _buildTopicCard(
-              'Ownership Deep Dive',
-              'Understanding Rust\'s unique memory management system',
-              _buildOwnershipContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Macros
-            _buildTopicCard(
-              'Rust Macros',
-              'Code generation with declarative and procedural macros',
-              _buildMacrosContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Testing and Documentation
-            _buildTopicCard(
-              'Testing & Documentation',
-              'Comprehensive testing strategies and documentation practices',
-              _buildTestingContent(),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Specialized Applications
-            _buildTopicCard(
-              'Specialized Applications',
-              'Real-world Rust development scenarios',
-              _buildSpecializedContent(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<RustContentScreen> createState() => _RustContentScreenState();
+}
 
-  Widget _buildContentSection(String title, String description, List<String> items, {bool showBullets = true}) {
+class _RustContentScreenState extends BaseContentScreenState<RustContentScreen> {
+  
+  // Global keys for navigation
+  final GlobalKey _overviewKey = GlobalKey();
+  final GlobalKey _fundamentalsKey = GlobalKey();
+  final GlobalKey _tupleStructsKey = GlobalKey();
+  final GlobalKey _genericsKey = GlobalKey();
+  final GlobalKey _errorHandlingKey = GlobalKey();
+  final GlobalKey _patternMatchingKey = GlobalKey();
+  final GlobalKey _smartPointersKey = GlobalKey();
+  final GlobalKey _concurrencyKey = GlobalKey();
+  final GlobalKey _ownershipKey = GlobalKey();
+  final GlobalKey _macrosKey = GlobalKey();
+  final GlobalKey _testingKey = GlobalKey();
+  final GlobalKey _specializedKey = GlobalKey();
+
+  @override
+  String get screenTitle => 'Rust Programming';
+
+  @override
+  String get screenSubtitle => 'Build fast, safe, and concurrent systems programming solutions';
+
+  @override
+  IconData get screenIcon => Icons.code;
+
+  @override
+  Color get screenColor => const Color(0xFFFF7043);
+
+  @override
+  List<IndexItem> get indexItems => [
+    IndexItem(
+      id: 'overview',
+      title: 'Course Overview',
+      subtitle: 'Introduction to comprehensive Rust programming',
+      icon: Icons.info_outline,
+      color: const Color(0xFFFF7043),
+      globalKey: _overviewKey,
+    ),
+    IndexItem(
+      id: 'fundamentals',
+      title: 'Rust Fundamentals',
+      subtitle: 'Basic syntax, types, and core concepts',
+      icon: Icons.foundation,
+      color: const Color(0xFFFF7043),
+      globalKey: _fundamentalsKey,
+    ),
+    IndexItem(
+      id: 'tuple_structs',
+      title: 'Tuple Structs',
+      subtitle: 'Newtype pattern for type safety',
+      icon: Icons.data_object,
+      color: const Color(0xFFFF7043),
+      globalKey: _tupleStructsKey,
+    ),
+    IndexItem(
+      id: 'generics',
+      title: 'Generics & Traits',
+      subtitle: 'Flexible and reusable code with generics',
+      icon: Icons.schema,
+      color: const Color(0xFFFF7043),
+      globalKey: _genericsKey,
+    ),
+    IndexItem(
+      id: 'error_handling',
+      title: 'Error Handling',
+      subtitle: 'Robust error handling with Result and Option',
+      icon: Icons.error_outline,
+      color: const Color(0xFFFF7043),
+      globalKey: _errorHandlingKey,
+    ),
+    IndexItem(
+      id: 'pattern_matching',
+      title: 'Pattern Matching',
+      subtitle: 'Powerful pattern matching with match expressions',
+      icon: Icons.pattern,
+      color: const Color(0xFFFF7043),
+      globalKey: _patternMatchingKey,
+    ),
+    IndexItem(
+      id: 'smart_pointers',
+      title: 'Smart Pointers',
+      subtitle: 'Memory management with Box, Rc, and Arc',
+      icon: Icons.memory,
+      color: const Color(0xFFFF7043),
+      globalKey: _smartPointersKey,
+    ),
+    IndexItem(
+      id: 'concurrency',
+      title: 'Concurrency & Async',
+      subtitle: 'Parallel programming and async/await',
+      icon: Icons.sync,
+      color: const Color(0xFFFF7043),
+      globalKey: _concurrencyKey,
+    ),
+    IndexItem(
+      id: 'ownership',
+      title: 'Ownership Deep Dive',
+      subtitle: 'Understanding Rust\'s memory management system',
+      icon: Icons.security,
+      color: const Color(0xFFFF7043),
+      globalKey: _ownershipKey,
+    ),
+    IndexItem(
+      id: 'macros',
+      title: 'Rust Macros',
+      subtitle: 'Code generation with declarative and procedural macros',
+      icon: Icons.functions,
+      color: const Color(0xFFFF7043),
+      globalKey: _macrosKey,
+    ),
+    IndexItem(
+      id: 'testing',
+      title: 'Testing & Documentation',
+      subtitle: 'Comprehensive testing strategies and documentation',
+      icon: Icons.verified,
+      color: const Color(0xFFFF7043),
+      globalKey: _testingKey,
+    ),
+    IndexItem(
+      id: 'specialized',
+      title: 'Specialized Applications',
+      subtitle: 'Real-world Rust development scenarios',
+      icon: Icons.apps,
+      color: const Color(0xFFFF7043),
+      globalKey: _specializedKey,
+    ),
+  ];
+
+  @override
+  Widget buildContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+        // Course Overview
+        buildTopicCard(
+          'Course Overview',
+          'This comprehensive Rust course covers everything from fundamentals to advanced topics. Based on Google\'s Comprehensive Rust curriculum.',
+          buildContentSection(
+            'Course Overview',
+            'This comprehensive Rust course covers everything from fundamentals to advanced topics. Based on Google\'s Comprehensive Rust curriculum.',
+            [],
+            showBullets: false,
           ),
+          key: _overviewKey,
         ),
-        const SizedBox(height: 16),
-        Text(
-          description,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white70,
-            height: 1.5,
+        
+        const SizedBox(height: 24),
+        
+        // Rust Fundamentals
+        buildTopicCard(
+          'Rust Fundamentals',
+          'Basic syntax, types, and core concepts',
+          buildModuleCard(
+            'Rust Fundamentals',
+            'Basic syntax, types, and core concepts',
+            [
+              'Variables and mutability',
+              'Data types and type system',
+              'Functions and control flow',
+              'Ownership and borrowing',
+              'References and lifetimes',
+              'Structs and enums',
+            ],
+            const Color(0xFFE74C3C),
+            Icons.foundation,
           ),
+          key: _fundamentalsKey,
         ),
-        if (showBullets && items.isNotEmpty) ...[
-          const SizedBox(height: 20),
-          ...items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Row(
-              children: [
-                Container(
-                  width: 6,
-                  height: 6,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFF8A3C),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    item,
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )),
-        ],
+        
+        const SizedBox(height: 24),
+        
+        // Tuple Structs Deep Dive
+        buildTopicCard(
+          'Tuple Structs',
+          'Learn about tuple structs and the newtype pattern for type safety',
+          _buildTupleStructsContent(),
+          key: _tupleStructsKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Generics and Traits
+        buildTopicCard(
+          'Generics and Trait System',
+          'Write flexible and reusable code with Rust generics and traits',
+          _buildGenericsContent(),
+          key: _genericsKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Error Handling
+        buildTopicCard(
+          'Error Handling',
+          'Robust error handling with Result<T, E> and Option<T>',
+          _buildErrorHandlingContent(),
+          key: _errorHandlingKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Pattern Matching
+        buildTopicCard(
+          'Pattern Matching',
+          'Powerful pattern matching with match expressions',
+          _buildPatternMatchingContent(),
+          key: _patternMatchingKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Smart Pointers
+        buildTopicCard(
+          'Smart Pointers',
+          'Memory management with Box, Rc, and Arc',
+          _buildSmartPointersContent(),
+          key: _smartPointersKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Concurrency
+        buildTopicCard(
+          'Concurrency and Async',
+          'Parallel programming and async/await in Rust',
+          _buildConcurrencyContent(),
+          key: _concurrencyKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Ownership Deep Dive
+        buildTopicCard(
+          'Ownership Deep Dive',
+          'Understanding Rust\'s unique memory management system',
+          _buildOwnershipContent(),
+          key: _ownershipKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Macros
+        buildTopicCard(
+          'Rust Macros',
+          'Code generation with declarative and procedural macros',
+          _buildMacrosContent(),
+          key: _macrosKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Testing and Documentation
+        buildTopicCard(
+          'Testing & Documentation',
+          'Comprehensive testing strategies and documentation practices',
+          _buildTestingContent(),
+          key: _testingKey,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // Specialized Applications
+        buildTopicCard(
+          'Specialized Applications',
+          'Real-world Rust development scenarios',
+          _buildSpecializedContent(),
+          key: _specializedKey,
+        ),
       ],
     );
   }
 
-  Widget _buildModuleCard(String title, String description, List<String> topics, Color color, IconData icon) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: topics.map((topic) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: color.withValues(alpha: 0.3),
-                  width: 1,
-                ),
-              ),
-              child: Text(
-                topic,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: color,
-                ),
-              ),
-            )).toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopicCard(String title, String description, Widget content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF8A3C).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.data_object,
-                  color: Color(0xFFFF8A3C),
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          content,
-        ],
-      ),
-    );
-  }
 
   Widget _buildTupleStructsContent() {
     return Column(
@@ -464,7 +341,7 @@ fn compute_weight(mass: f64) -> Newtons {
         color: const Color(0xFF34495E),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
+          color: screenColor.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -476,7 +353,7 @@ fn compute_weight(mass: f64) -> Newtons {
             style: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFFFF8A3C),
+              color: screenColor,
             ),
           ),
           const SizedBox(height: 8),
@@ -564,8 +441,8 @@ fn compute_weight(mass: f64) -> Newtons {
                 width: 6,
                 height: 6,
                 margin: const EdgeInsets.only(top: 6),
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFF8A3C),
+                decoration: BoxDecoration(
+                  color: screenColor,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -1001,7 +878,7 @@ async fn main() -> std::io::Result<()> {
         color: const Color(0xFF34495E),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFFFF8A3C).withValues(alpha: 0.2),
+          color: screenColor.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -1013,7 +890,7 @@ async fn main() -> std::io::Result<()> {
             style: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFFFF8A3C),
+              color: screenColor,
             ),
           ),
           const SizedBox(height: 8),
