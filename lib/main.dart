@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Riverpod provider for selected category
-final selectedCategoryProvider = StateProvider<String>((ref) => 'All');
+import 'src/router/app_router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: LearningApp()));
+  runApp(const LearningApp());
 }
 
 class LearningApp extends StatelessWidget {
@@ -15,7 +14,7 @@ class LearningApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'E-Online Learning Platform',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -27,19 +26,21 @@ class LearningApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
       ),
-      home: const LandingPage(),
+      routerConfig: appRouter,
     );
   }
 }
 
-class LandingPage extends ConsumerStatefulWidget {
-  const LandingPage({super.key});
+class LandingPage extends StatefulWidget {
+  final bool scrollToCourses;
+  
+  const LandingPage({super.key, this.scrollToCourses = false});
 
   @override
-  ConsumerState<LandingPage> createState() => _LandingPageState();
+  State<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends ConsumerState<LandingPage> {
+class _LandingPageState extends State<LandingPage> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _coursesKey = GlobalKey();
 
@@ -67,6 +68,17 @@ class _LandingPageState extends ConsumerState<LandingPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Auto-scroll to courses section if requested
+    if (widget.scrollToCourses) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToCourses();
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
@@ -85,8 +97,8 @@ class _LandingPageState extends ConsumerState<LandingPage> {
     if (context != null) {
       Scrollable.ensureVisible(
         context,
-        duration: const Duration(milliseconds: 800),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 1500),
+        curve: Curves.easeInOutCubic,
       );
     }
   }
@@ -109,6 +121,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
             _buildNavigation(),
             _buildHeroSection(),
             _buildCourseCategoriesSection(),
+            _buildFooter(),
           ],
         ),
       ),
@@ -247,7 +260,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                     ),
 
                     const SizedBox(width: 60),
-                    
+
                     // Stats
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,9 +283,9 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(width: 40),
-                    
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -497,6 +510,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                   'Flutter\nDevelopment',
                   Icons.phone_android,
                   const Color(0xFFE91E63),
+                  '/flutter',
                 ),
               ),
               const SizedBox(width: 24),
@@ -505,6 +519,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                   'Rust\nProgramming',
                   Icons.code,
                   const Color(0xFFFF8A3C),
+                  '/rust',
                 ),
               ),
               const SizedBox(width: 24),
@@ -513,6 +528,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                   'OOP\nConcepts',
                   Icons.design_services,
                   const Color(0xFF00BCD4),
+                  '/oop',
                 ),
               ),
               const SizedBox(width: 24),
@@ -521,63 +537,315 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                   'Others\nConcepts',
                   Icons.psychology,
                   const Color(0xFF9B59B6),
+                  '/others',
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 40),
-          Align(
-            alignment: Alignment.centerRight,
-            child: GestureDetector(
-              onTap: _openAboutMeLink,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF8A3C),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              ),
-            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCategoryCard(String title, IconData icon, Color color) {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            icon,
-            color: Colors.white,
-            size: 48,
-          ),
-          const Spacer(),
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              height: 1.2,
+  Widget _buildCategoryCard(String title, IconData icon, Color color, String route) {
+    return GestureDetector(
+      onTap: () => context.go(route),
+      child: Container(
+        height: 200,
+        padding: const EdgeInsets.all(32),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: color.withValues(alpha: 0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+              color: Colors.white,
+              size: 48,
+            ),
+            const Spacer(),
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                height: 1.2,
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildFooter() {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF1E2A35),
+            Color(0xFF111113),
+          ],
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 80,
+          vertical: 48,
+        ),
+        child: Column(
+          children: [
+            // Footer Content
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildFooterBrand(),
+                _buildSocialLinks(),
+              ],
+            ),
+            
+            const SizedBox(height: 32),
+            
+            // Divider
+            Container(
+              height: 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFFFF8A3C).withValues(alpha: 0.3),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Copyright
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '© ${DateTime.now().year} ',
+                  style: GoogleFonts.inter(
+                    color: Colors.white60,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
+                  ).createShader(bounds),
+                  child: Text(
+                    'Intishar-Ul Islam',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                Text(
+                  '. All rights reserved.',
+                  style: GoogleFonts.inter(
+                    color: Colors.white60,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooterBrand() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Logo and Name
+        Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
+                ),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
+                    blurRadius: 15,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'E',
+                  style: GoogleFonts.inter(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
+                  ).createShader(bounds),
+                  child: Text(
+                    'E-Online',
+                    style: GoogleFonts.inter(
+                      fontSize: 24,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Text(
+                  'Learning Platform',
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        // Tagline
+        Text(
+          'Building knowledge through comprehensive programming courses\nwith expert-led content and hands-on learning.',
+          style: GoogleFonts.inter(
+            fontSize: 14,
+            color: Colors.white60,
+            fontWeight: FontWeight.w500,
+            height: 1.4,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialLinks() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Connect With Me',
+          style: GoogleFonts.inter(
+            fontSize: 18,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildSocialLink(
+              Icons.code,
+              'https://github.com/Nahianether/',
+              'GitHub',
+              const Color(0xFF333333),
+            ),
+            const SizedBox(width: 16),
+            _buildSocialLink(
+              Icons.business,
+              'https://www.linkedin.com/in/nahinxp21/',
+              'LinkedIn',
+              const Color(0xFF0077B5),
+            ),
+            const SizedBox(width: 16),
+            _buildSocialLink(
+              Icons.mail,
+              'mailto:nahianether3@gmail.com',
+              'Gmail',
+              const Color(0xFFEA4335),
+            ),
+            const SizedBox(width: 16),
+            _buildSocialLink(
+              Icons.language,
+              'https://intishar.xyz',
+              'Website',
+              const Color(0xFF9B59B6),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialLink(IconData icon, String url, String tooltip, Color color) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => _launchURL(url),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2C3E50),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: color.withValues(alpha: 0.3),
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Icon(
+            icon,
+            size: 24,
+            color: Colors.white70,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
