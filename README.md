@@ -23,10 +23,6 @@ A Flutter application for creating and sharing personal blog posts with a clean,
 - **UI:** Material Design components
 - **Architecture:** Clean Architecture pattern
 
-## 📱 Screenshots
-
-*Add screenshots of your blog app here*
-
 ## 🚀 Getting Started
 
 ### Prerequisites
