@@ -1,11 +1,11 @@
 {
-    "name": "personal_blog",
-    "short_name": "personal_blog",
+    "name": "E-Online Learning Platform",
+    "short_name": "E-Online",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#1E2A35",
+    "theme_color": "#FF8A3C",
+    "description": "Building knowledge through comprehensive programming courses with expert-led content and hands-on learning.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

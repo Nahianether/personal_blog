@@ -129,56 +129,121 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildNavigation() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 24),
-      child: Row(
-        children: [
-          // Logo
-          GestureDetector(
-            onTap: _scrollToTop,
-            child: Text(
-              'E-Online.',
-              style: GoogleFonts.inter(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 768;
+        
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : 80,
+            vertical: 24,
           ),
-
-          const Spacer(),
-
-          // Navigation Links
-          Row(
-            children: [
-              _buildNavLink('Home', _scrollToTop),
-              const SizedBox(width: 40),
-              _buildNavLink('Courses', _scrollToCourses),
-              const SizedBox(width: 40),
-
-              // About Me Button
-              GestureDetector(
-                onTap: _openAboutMeLink,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF8A3C),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Text(
-                    'About Me',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+          child: isMobile
+              ? Column(
+                  children: [
+                    // Logo
+                    GestureDetector(
+                      onTap: _scrollToTop,
+                      child: Text(
+                        'E-Online.',
+                        style: GoogleFonts.inter(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    // Mobile Navigation
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: _buildNavLink('Home', _scrollToTop),
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: _buildNavLink('Courses', _scrollToCourses),
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: _openAboutMeLink,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFFF8A3C),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  'About Me',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    // Logo
+                    GestureDetector(
+                      onTap: _scrollToTop,
+                      child: Text(
+                        'E-Online.',
+                        style: GoogleFonts.inter(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    // Navigation Links
+                    Row(
+                      children: [
+                        _buildNavLink('Home', _scrollToTop),
+                        const SizedBox(width: 40),
+                        _buildNavLink('Courses', _scrollToCourses),
+                        const SizedBox(width: 40),
+
+                        // About Me Button
+                        GestureDetector(
+                          onTap: _openAboutMeLink,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFF8A3C),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Text(
+                              'About Me',
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -197,280 +262,374 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildHeroSection() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 80),
-      child: Row(
-        children: [
-          // Left Side - Text Content
-          Expanded(
-            flex: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.inter(
-                      fontSize: 56,
-                      fontWeight: FontWeight.w700,
-                      height: 1.1,
-                    ),
-                    children: const [
-                      TextSpan(
-                        text: 'Investing in\nKnowledge and\n',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      TextSpan(
-                        text: 'Your Future',
-                        style: TextStyle(color: Color(0xFF9B59B6)),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Our e-learning programs has been developed to be a vehicle\nof delivering multimedia learning solutions for your business.',
-                  style: GoogleFonts.inter(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white70,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 768;
+        final isTablet = constraints.maxWidth < 1024;
+        
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
+            vertical: isMobile ? 40 : 80,
+          ),
+          child: isMobile
+              ? Column(
                   children: [
-                    // Contact Button
-                    GestureDetector(
-                      onTap: _scrollToCourses,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFF8A3C),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Text(
-                          'Start Learning',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                    _buildHeroImage(isMobile: true),
+                    const SizedBox(height: 40),
+                    _buildHeroText(isMobile: true),
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: _buildHeroText(isMobile: false),
                     ),
-
-                    const SizedBox(width: 60),
-
-                    // Stats
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Comprehensive',
-                          style: GoogleFonts.inter(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Career Courses',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(width: 40),
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Growing',
-                          style: GoogleFonts.inter(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Community',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      flex: 4,
+                      child: _buildHeroImage(isMobile: false),
                     ),
                   ],
                 ),
+        );
+      },
+    );
+  }
+
+  Widget _buildHeroText({required bool isMobile}) {
+    return Column(
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+        RichText(
+          textAlign: isMobile ? TextAlign.center : TextAlign.start,
+          text: TextSpan(
+            style: GoogleFonts.inter(
+              fontSize: isMobile ? 32 : 56,
+              fontWeight: FontWeight.w700,
+              height: 1.1,
+            ),
+            children: const [
+              TextSpan(
+                text: 'Investing in\nKnowledge and\n',
+                style: TextStyle(color: Colors.white),
+              ),
+              TextSpan(
+                text: 'Your Future',
+                style: TextStyle(color: Color(0xFF9B59B6)),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          isMobile 
+              ? 'Our e-learning programs deliver multimedia learning solutions for your business.'
+              : 'Our e-learning programs has been developed to be a vehicle\nof delivering multimedia learning solutions for your business.',
+          textAlign: isMobile ? TextAlign.center : TextAlign.start,
+          style: GoogleFonts.inter(
+            fontSize: isMobile ? 16 : 18,
+            fontWeight: FontWeight.w400,
+            color: Colors.white70,
+            height: 1.6,
+          ),
+        ),
+        const SizedBox(height: 40),
+        isMobile
+            ? Column(
+                children: [
+                  GestureDetector(
+                    onTap: _scrollToCourses,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFF8A3C),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        'Start Learning',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Comprehensive',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'Career Courses',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Growing',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'Community',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  GestureDetector(
+                    onTap: _scrollToCourses,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFF8A3C),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        'Start Learning',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 60),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Comprehensive',
+                        style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Career Courses',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 40),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Growing',
+                        style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Community',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+      ],
+    );
+  }
+
+  Widget _buildHeroImage({required bool isMobile}) {
+    final imageSize = isMobile ? 250.0 : 500.0;
+    
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: imageSize,
+            height: imageSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
+                  blurRadius: isMobile ? 20 : 40,
+                  spreadRadius: isMobile ? 5 : 10,
+                ),
               ],
             ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/gifs/programmer.gif',
+                fit: BoxFit.cover,
+                width: imageSize,
+                height: imageSize,
+              ),
+            ),
           ),
-
-          // Right Side - Illustration Area
-          Expanded(
-            flex: 4,
-            child: Stack(
-              children: [
-                // Main programmer GIF
-                Center(
-                  child: Container(
-                    width: 500,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFFF8A3C).withValues(alpha: 0.3),
-                          blurRadius: 40,
-                          spreadRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/gifs/programmer.gif',
-                        fit: BoxFit.cover,
-                        width: 500,
-                        height: 500,
-                      ),
-                    ),
-                  ),
+        ),
+        if (!isMobile) ...[
+          Positioned(
+            top: 20,
+            right: 20,
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: const Color(0xFF2C3E50),
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: const Color(0xFFFF8A3C),
+                  width: 2,
                 ),
-
-                // Decorative loading GIF
-                Positioned(
-                  top: 20,
-                  right: 20,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C3E50),
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: const Color(0xFFFF8A3C),
-                        width: 2,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(28),
-                      child: Image.asset(
-                        'assets/gifs/loading.gif',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: Image.asset(
+                  'assets/gifs/loading.gif',
+                  fit: BoxFit.cover,
                 ),
-
-                // Additional decorative element
-                Positioned(
-                  top: 100,
-                  right: 80,
-                  child: Container(
-                    width: 16,
-                    height: 16,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100,
+            right: 80,
+            child: Container(
+              width: 16,
+              height: 16,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFF8A3C),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 60,
+            left: 40,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2C3E50),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
                     decoration: const BoxDecoration(
                       color: Color(0xFFFF8A3C),
                       shape: BoxShape.circle,
                     ),
-                  ),
-                ),
-
-                // Stats card
-                Positioned(
-                  top: 60,
-                  left: 40,
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C3E50),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFF8A3C),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.people,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Active',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Learning Hub',
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
+                    child: const Icon(
+                      Icons.people,
+                      color: Colors.white,
+                      size: 16,
                     ),
                   ),
-                ),
-
-                // Learning chart
-                Positioned(
-                  bottom: 80,
-                  left: 20,
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C3E50),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Learning Chart',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            _buildChartBar(0.3, const Color(0xFFE91E63)),
-                            _buildChartBar(0.7, const Color(0xFFE91E63)),
-                            _buildChartBar(0.4, const Color(0xFF00BCD4)),
-                            _buildChartBar(0.8, const Color(0xFFFF8A3C)),
-                            _buildChartBar(1.0, const Color(0xFF9B59B6)),
-                            _buildChartBar(0.6, const Color(0xFF4CAF50)),
-                          ],
-                        ),
-                      ],
+                  const SizedBox(height: 4),
+                  Text(
+                    'Active',
+                    style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
                     ),
                   ),
-                ),
-              ],
+                  Text(
+                    'Learning Hub',
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 80,
+            left: 20,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2C3E50),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Learning Chart',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      _buildChartBar(0.3, const Color(0xFFE91E63)),
+                      _buildChartBar(0.7, const Color(0xFFE91E63)),
+                      _buildChartBar(0.4, const Color(0xFF00BCD4)),
+                      _buildChartBar(0.8, const Color(0xFFFF8A3C)),
+                      _buildChartBar(1.0, const Color(0xFF9B59B6)),
+                      _buildChartBar(0.6, const Color(0xFF4CAF50)),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
-      ),
+      ],
     );
   }
 
@@ -487,209 +646,344 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildCourseCategoriesSection() {
-    return Container(
-      key: _coursesKey,
-      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 60),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Essential\nCareer Courses',
-            style: GoogleFonts.inter(
-              fontSize: 42,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              height: 1.2,
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 768;
+        final isTablet = constraints.maxWidth < 1024;
+        
+        return Container(
+          key: _coursesKey,
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
+            vertical: isMobile ? 40 : 60,
           ),
-          const SizedBox(height: 60),
-          Row(
+          child: Column(
+            crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: _buildCategoryCard(
-                  'Flutter\nDevelopment',
-                  Icons.phone_android,
-                  const Color(0xFFE91E63),
-                  '/flutter',
+              Text(
+                'Essential\nCareer Courses',
+                textAlign: isMobile ? TextAlign.center : TextAlign.start,
+                style: GoogleFonts.inter(
+                  fontSize: isMobile ? 28 : 42,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  height: 1.2,
                 ),
               ),
-              const SizedBox(width: 24),
-              Expanded(
-                child: _buildCategoryCard(
-                  'Rust\nProgramming',
-                  Icons.code,
-                  const Color(0xFFFF8A3C),
-                  '/rust',
-                ),
-              ),
-              const SizedBox(width: 24),
-              Expanded(
-                child: _buildCategoryCard(
-                  'OOP\nConcepts',
-                  Icons.design_services,
-                  const Color(0xFF00BCD4),
-                  '/oop',
-                ),
-              ),
-              const SizedBox(width: 24),
-              Expanded(
-                child: _buildCategoryCard(
-                  'Others\nConcepts',
-                  Icons.psychology,
-                  const Color(0xFF9B59B6),
-                  '/others',
-                ),
-              ),
+              SizedBox(height: isMobile ? 40 : 60),
+              isMobile
+                  ? Column(
+                      children: [
+                        _buildCategoryCard(
+                          'Flutter\nDevelopment',
+                          Icons.phone_android,
+                          const Color(0xFFE91E63),
+                          '/flutter',
+                          isMobile: true,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildCategoryCard(
+                          'Rust\nProgramming',
+                          Icons.code,
+                          const Color(0xFFFF8A3C),
+                          '/rust',
+                          isMobile: true,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildCategoryCard(
+                          'OOP\nConcepts',
+                          Icons.design_services,
+                          const Color(0xFF00BCD4),
+                          '/oop',
+                          isMobile: true,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildCategoryCard(
+                          'Others\nConcepts',
+                          Icons.psychology,
+                          const Color(0xFF9B59B6),
+                          '/others',
+                          isMobile: true,
+                        ),
+                      ],
+                    )
+                  : isTablet
+                      ? Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildCategoryCard(
+                                    'Flutter\nDevelopment',
+                                    Icons.phone_android,
+                                    const Color(0xFFE91E63),
+                                    '/flutter',
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: _buildCategoryCard(
+                                    'Rust\nProgramming',
+                                    Icons.code,
+                                    const Color(0xFFFF8A3C),
+                                    '/rust',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildCategoryCard(
+                                    'OOP\nConcepts',
+                                    Icons.design_services,
+                                    const Color(0xFF00BCD4),
+                                    '/oop',
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: _buildCategoryCard(
+                                    'Others\nConcepts',
+                                    Icons.psychology,
+                                    const Color(0xFF9B59B6),
+                                    '/others',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(
+                              child: _buildCategoryCard(
+                                'Flutter\nDevelopment',
+                                Icons.phone_android,
+                                const Color(0xFFE91E63),
+                                '/flutter',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _buildCategoryCard(
+                                'Rust\nProgramming',
+                                Icons.code,
+                                const Color(0xFFFF8A3C),
+                                '/rust',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _buildCategoryCard(
+                                'OOP\nConcepts',
+                                Icons.design_services,
+                                const Color(0xFF00BCD4),
+                                '/oop',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _buildCategoryCard(
+                                'Others\nConcepts',
+                                Icons.psychology,
+                                const Color(0xFF9B59B6),
+                                '/others',
+                              ),
+                            ),
+                          ],
+                        ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildCategoryCard(String title, IconData icon, Color color, String route) {
+  Widget _buildCategoryCard(String title, IconData icon, Color color, String route, {bool isMobile = false}) {
     return GestureDetector(
       onTap: () => context.go(route),
       child: Container(
-        height: 200,
-        padding: const EdgeInsets.all(32),
+        height: isMobile ? 120 : 200,
+        width: isMobile ? double.infinity : null,
+        padding: EdgeInsets.all(isMobile ? 20 : 32),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(isMobile ? 16 : 24),
           boxShadow: [
             BoxShadow(
               color: color.withValues(alpha: 0.3),
-              blurRadius: 20,
+              blurRadius: isMobile ? 10 : 20,
               offset: const Offset(0, 8),
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-              size: 48,
-            ),
-            const Spacer(),
-            Text(
-              title,
-              style: GoogleFonts.inter(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                height: 1.2,
+        child: isMobile
+            ? Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 48,
+                  ),
+                  const Spacer(),
+                  Text(
+                    title,
+                    style: GoogleFonts.inter(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
 
   Widget _buildFooter() {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF1E2A35),
-            Color(0xFF111113),
-          ],
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 80,
-          vertical: 48,
-        ),
-        child: Column(
-          children: [
-            // Footer Content
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildFooterBrand(),
-                _buildSocialLinks(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 768;
+        
+        return Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF1E2A35),
+                Color(0xFF111113),
               ],
             ),
-            
-            const SizedBox(height: 32),
-            
-            // Divider
-            Container(
-              height: 1,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.transparent,
-                    const Color(0xFFFF8A3C).withValues(alpha: 0.3),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 20 : 80,
+              vertical: isMobile ? 32 : 48,
             ),
-            
-            const SizedBox(height: 24),
-            
-            // Copyright
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
               children: [
-                Text(
-                  '© ${DateTime.now().year} ',
-                  style: GoogleFonts.inter(
-                    color: Colors.white60,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
-                  ).createShader(bounds),
-                  child: Text(
-                    'Intishar-Ul Islam',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.5,
+                // Footer Content
+                isMobile
+                    ? Column(
+                        children: [
+                          _buildFooterBrand(isMobile: true),
+                          const SizedBox(height: 32),
+                          _buildSocialLinks(isMobile: true),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          _buildFooterBrand(),
+                          _buildSocialLinks(),
+                        ],
+                      ),
+                
+                const SizedBox(height: 32),
+                
+                // Divider
+                Container(
+                  height: 1,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        const Color(0xFFFF8A3C).withValues(alpha: 0.3),
+                        Colors.transparent,
+                      ],
                     ),
                   ),
                 ),
-                Text(
-                  '. All rights reserved.',
-                  style: GoogleFonts.inter(
-                    color: Colors.white60,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                  ),
+                
+                const SizedBox(height: 24),
+                
+                // Copyright
+                Column(
+                  children: [
+                    Text(
+                      '© ${DateTime.now().year} ',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: Colors.white60,
+                        fontSize: isMobile ? 12 : 14,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    ShaderMask(
+                      shaderCallback: (bounds) => const LinearGradient(
+                        colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
+                      ).createShader(bounds),
+                      child: Text(
+                        'Intishar-Ul Islam',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: isMobile ? 12 : 14,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '. All rights reserved.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: Colors.white60,
+                        fontSize: isMobile ? 12 : 14,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildFooterBrand() {
+  Widget _buildFooterBrand({bool isMobile = false}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         // Logo and Name
         Row(
+          mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: isMobile ? 40 : 48,
+              height: isMobile ? 40 : 48,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [Color(0xFFFF8A3C), Color(0xFF9B59B6)],
@@ -707,7 +1001,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Text(
                   'E',
                   style: GoogleFonts.inter(
-                    fontSize: 24,
+                    fontSize: isMobile ? 20 : 24,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
                   ),
@@ -716,7 +1010,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             const SizedBox(width: 16),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
               children: [
                 ShaderMask(
                   shaderCallback: (bounds) => const LinearGradient(
@@ -725,7 +1019,7 @@ class _LandingPageState extends State<LandingPage> {
                   child: Text(
                     'E-Online',
                     style: GoogleFonts.inter(
-                      fontSize: 24,
+                      fontSize: isMobile ? 20 : 24,
                       letterSpacing: 2.0,
                       fontWeight: FontWeight.w900,
                       color: Colors.white,
@@ -735,7 +1029,7 @@ class _LandingPageState extends State<LandingPage> {
                 Text(
                   'Learning Platform',
                   style: GoogleFonts.inter(
-                    fontSize: 14,
+                    fontSize: isMobile ? 12 : 14,
                     color: Colors.white70,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.5,
@@ -749,8 +1043,9 @@ class _LandingPageState extends State<LandingPage> {
         // Tagline
         Text(
           'Building knowledge through comprehensive programming courses\nwith expert-led content and hands-on learning.',
+          textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             color: Colors.white60,
             fontWeight: FontWeight.w500,
             height: 1.4,
@@ -760,52 +1055,84 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildSocialLinks() {
+  Widget _buildSocialLinks({bool isMobile = false}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Text(
           'Connect With Me',
           style: GoogleFonts.inter(
-            fontSize: 18,
+            fontSize: isMobile ? 16 : 18,
             color: Colors.white,
             fontWeight: FontWeight.w700,
             letterSpacing: 0.5,
           ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildSocialLink(
-              Icons.code,
-              'https://github.com/Nahianether/',
-              'GitHub',
-              const Color(0xFF333333),
-            ),
-            const SizedBox(width: 16),
-            _buildSocialLink(
-              Icons.business,
-              'https://www.linkedin.com/in/nahinxp21/',
-              'LinkedIn',
-              const Color(0xFF0077B5),
-            ),
-            const SizedBox(width: 16),
-            _buildSocialLink(
-              Icons.mail,
-              'mailto:nahianether3@gmail.com',
-              'Gmail',
-              const Color(0xFFEA4335),
-            ),
-            const SizedBox(width: 16),
-            _buildSocialLink(
-              Icons.language,
-              'https://intishar.xyz',
-              'Portfolio',
-              const Color(0xFF9B59B6),
-            ),
-          ],
-        ),
+        isMobile
+            ? Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  _buildSocialLink(
+                    Icons.code,
+                    'https://github.com/Nahianether/',
+                    'GitHub',
+                    const Color(0xFF333333),
+                  ),
+                  _buildSocialLink(
+                    Icons.business,
+                    'https://www.linkedin.com/in/nahinxp21/',
+                    'LinkedIn',
+                    const Color(0xFF0077B5),
+                  ),
+                  _buildSocialLink(
+                    Icons.mail,
+                    'mailto:nahianether3@gmail.com',
+                    'Gmail',
+                    const Color(0xFFEA4335),
+                  ),
+                  _buildSocialLink(
+                    Icons.language,
+                    'https://intishar.xyz',
+                    'Portfolio',
+                    const Color(0xFF9B59B6),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildSocialLink(
+                    Icons.code,
+                    'https://github.com/Nahianether/',
+                    'GitHub',
+                    const Color(0xFF333333),
+                  ),
+                  const SizedBox(width: 16),
+                  _buildSocialLink(
+                    Icons.business,
+                    'https://www.linkedin.com/in/nahinxp21/',
+                    'LinkedIn',
+                    const Color(0xFF0077B5),
+                  ),
+                  const SizedBox(width: 16),
+                  _buildSocialLink(
+                    Icons.mail,
+                    'mailto:nahianether3@gmail.com',
+                    'Gmail',
+                    const Color(0xFFEA4335),
+                  ),
+                  const SizedBox(width: 16),
+                  _buildSocialLink(
+                    Icons.language,
+                    'https://intishar.xyz',
+                    'Portfolio',
+                    const Color(0xFF9B59B6),
+                  ),
+                ],
+              ),
       ],
     );
   }
