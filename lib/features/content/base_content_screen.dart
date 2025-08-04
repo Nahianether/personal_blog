@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../widgets/content_index_tab.dart';
+import '../../core/models/app_constants.dart';
+import '../../shared/widgets/content_index_tab.dart';
 
 abstract class BaseContentScreen extends StatefulWidget {
   const BaseContentScreen({super.key});
@@ -34,9 +35,9 @@ abstract class BaseContentScreenState<T extends BaseContentScreen> extends State
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
+      backgroundColor: AppConstants.darkBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
+        backgroundColor: AppConstants.darkBackgroundColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -212,7 +213,7 @@ abstract class BaseContentScreenState<T extends BaseContentScreen> extends State
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
+        color: AppConstants.cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: color.withValues(alpha: 0.3),
@@ -301,7 +302,7 @@ abstract class BaseContentScreenState<T extends BaseContentScreen> extends State
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF2C3E50),
+        color: AppConstants.cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: screenColor.withValues(alpha: 0.3),

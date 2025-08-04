@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../screens/content/flutter_content_screen.dart';
-import '../screens/content/rust_content_screen.dart';
-import '../screens/content/oop_content_screen.dart';
-import '../screens/content/others_content_screen.dart';
-import '../../main.dart';
+import '../content/flutter_content_screen.dart';
+import '../content/rust_content_screen.dart';
+import '../content/oop_content_screen.dart';
+import '../content/others_content_screen.dart';
+import '../home/screens/landing_page.dart';
 
 // Global variable to track if we're coming from a content page
 bool _lastPageWasContent = false;

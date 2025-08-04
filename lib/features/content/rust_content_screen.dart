@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'base_content_screen.dart';
-import '../../widgets/content_index_tab.dart';
+import '../../shared/widgets/content_index_tab.dart';
 
 class RustContentScreen extends BaseContentScreen {
   const RustContentScreen({super.key});
