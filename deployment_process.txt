@@ -1,5 +1,5 @@
 cd /var/www/learning.intishar.xyz
-git pull origin master
+git pull origin main
 flutter build web --release
 cp -r build/web/* /var/www/learning.intishar.xyz/
 chown -R www-data:www-data /var/www/learning.intishar.xyz/
